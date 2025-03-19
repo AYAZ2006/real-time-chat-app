@@ -10,7 +10,7 @@ const Chat=({roomName})=>{
         const storedUsername=localStorage.getItem('username')
         if (storedUsername){
             setUsername(storedUsername)
-            const ws=new WebSocket(`ws://https://loopchat-backend.vercel.app/ws/chat/${roomName}/`)
+            const ws=new WebSocket(`wss://loopchat-backend.vercel.app/ws/chat/${roomName}/`)
             setSocket(ws)
             ws.onmessage=(event)=>{
                 const data=JSON.parse(event.data)
