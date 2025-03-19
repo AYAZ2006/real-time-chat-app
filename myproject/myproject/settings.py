@@ -21,7 +21,7 @@ SECRET_KEY = env("SECRET_KEY", default="fallback-secret-key")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env.bool("DEBUG", default=False)
 
-ALLOWED_HOST=['real-time-chat-app-eaw7.vercel.app']
+ALLOWED_HOST=['*']
 STATIC_URL='/static/
 STATIC_ROOT=os.path.join(BASE_DIR,'staticfiles')
 STATICFILES_DIRS=[os.path.join(BASE_DIR,'static')]
@@ -49,13 +49,8 @@ INSTALLED_APPS = [
     'whitenoise.runserver_nostatic',
 ]
 # CORS & Security Configurations
-CORS_ALLOW_ALL_ORIGINS = env.bool("CORS_ALLOW_ALL_ORIGINS", default=False)
-CORS_ALLOWED_ORIGINS = env.list("CORS_ALLOWED_ORIGINS", default=[
-    "http://localhost:5173",
-    "http://localhost:5174",
-    "http://localhost:5175",
-    "https://loopchat.vercel.app"
-])
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOWED_ORIGINS = ['http://localhost:5173,http://localhost:5174,http://localhost:5175']
 CSRF_TRUSTED_ORIGINS = env.list("CSRF_TRUSTED_ORIGINS", default=["http://127.0.0.1:8000"])
 CSRF_COOKIE_SECURE = env.bool("CSRF_COOKIE_SECURE", default=False)
 CORS_ALLOW_CREDENTIALS = True
