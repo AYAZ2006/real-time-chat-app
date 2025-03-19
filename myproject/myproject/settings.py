@@ -15,7 +15,7 @@ else:
 
 SECRET_KEY = env("SECRET_KEY", default="fallback-secret-key")
 DEBUG = env.bool("DEBUG", default=False)
-ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=["*"])
+ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=["real-time-chat-app-2-dqz9.onrender.com"])
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
