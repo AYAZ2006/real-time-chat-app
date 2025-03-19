@@ -24,7 +24,7 @@ const Register=()=>{
         }
         try
         {
-            await axios.post('https://real-time-chat-app-eaw7.vercel.app/api/accounts/register/', { username, email, password })
+            await axios.post('https://loopchat-backend.vercel.app/api/accounts/register/', { username, email, password })
             alert('Registration successful!')
             navigate('/login')
         }
