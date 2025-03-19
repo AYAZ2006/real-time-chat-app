@@ -90,6 +90,7 @@ CHANNEL_LAYERS = {
         "BACKEND": "channels.layers.InMemoryChannelLayer",
     },
 }
+ROOT_URLCONF = "myproject.urls"  # Change "myproject" to your actual Django project name
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [],
