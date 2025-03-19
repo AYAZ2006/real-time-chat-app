@@ -14,7 +14,7 @@ else:
     raise RuntimeError(".env file not found. Ensure all environment variables are properly set.")
 
 SECRET_KEY = env("SECRET_KEY", default="fallback-secret-key")
-DEBUG = env.bool("DEBUG", default=False)
+DEBUG = env.bool("DEBUG", default=True)
 ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=["real-time-chat-app-2-dqz9.onrender.com"])
 
 STATIC_URL = '/static/'
