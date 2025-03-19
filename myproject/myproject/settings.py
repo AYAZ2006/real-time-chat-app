@@ -15,7 +15,7 @@ else:
 
 SECRET_KEY = env("SECRET_KEY", default="fallback-secret-key")
 DEBUG = env.bool("DEBUG", default=True)
-ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=["real-time-chat-app-2-dqz9.onrender.com"])
+ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=["loopchat-backend.vercel.app"])
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
@@ -60,7 +60,7 @@ CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOWED_ORIGINS = env.list("CORS_ALLOWED_ORIGINS", default=[
     "http://localhost:5173",
     "http://localhost:5174",
-    "http://localhost:5175"
+    "http://localhost:5175",
 ])
 CSRF_TRUSTED_ORIGINS = env.list("CSRF_TRUSTED_ORIGINS", default=["http://127.0.0.1:8000"])
 CSRF_COOKIE_SECURE = env.bool("CSRF_COOKIE_SECURE", default=False)
