@@ -3,32 +3,26 @@ import os
 from pathlib import Path
 import dj_database_url
 
-# Define the base directory
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Initialize environment variables
 env = environ.Env(DEBUG=(bool, False))
 
-# Load .env file
 env_file = os.path.join(BASE_DIR, ".env")
 if os.path.exists(env_file):
     environ.Env.read_env(env_file)
 else:
     raise RuntimeError(".env file not found. Ensure all environment variables are properly set.")
 
-# SECURITY SETTINGS
 SECRET_KEY = env("SECRET_KEY", default="fallback-secret-key")
 DEBUG = env.bool("DEBUG", default=False)
 ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=["*"])
 
-# STATIC & MEDIA FILES
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-# INSTALLED APPS
 INSTALLED_APPS = [
     'daphne',
     'django.contrib.admin',
@@ -50,31 +44,20 @@ INSTALLED_APPS = [
     'whitenoise.runserver_nostatic',
 ]
 
-# CORS & SECURITY CONFIG
 CORS_ALLOW_ALL_ORIGINS = True
-CORS_ALLOWED_ORIGINS = [
+CORS_ALLOWED_ORIGINS = env.list("CORS_ALLOWED_ORIGINS", default=[
     "http://localhost:5173",
     "http://localhost:5174",
     "http://localhost:5175"
-]
+])
 CSRF_TRUSTED_ORIGINS = env.list("CSRF_TRUSTED_ORIGINS", default=["http://127.0.0.1:8000"])
 CSRF_COOKIE_SECURE = env.bool("CSRF_COOKIE_SECURE", default=False)
 CORS_ALLOW_CREDENTIALS = True
 
-# DATABASE CONFIGURATION
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
+    "default": dj_database_url.config(default=env('DATABASE_URL'))
 }
-ENVIRONMENT = env("ENVIRONMENT", default="development")
-POSTGRES_LOCALLY = env.bool("POSTGRES_LOCALLY", default=False)
 
-if ENVIRONMENT == 'production' or POSTGRES_LOCALLY:
-    DATABASES['default'] = dj_database_url.config(default=env('DATABASE_URL'))
-
-# EMAIL CONFIGURATION
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = env("EMAIL_HOST", default="smtp.gmail.com")
 EMAIL_HOST_USER = env("EMAIL_HOST_USER", default="")
@@ -82,26 +65,23 @@ EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD", default="")
 EMAIL_PORT = env.int("EMAIL_PORT", default=587)
 EMAIL_USE_TLS = env.bool("EMAIL_USE_TLS", default=True)
 
-# AUTHENTICATION CONFIG
 SITE_ID = 1
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
-# ASGI APPLICATION
 ASGI_APPLICATION = "myproject.asgi.application"
 
-# CHANNEL LAYERS
 CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels.layers.InMemoryChannelLayer",
     },
 }
 
-# REST FRAMEWORK CONFIG
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [],
     'DEFAULT_PERMISSION_CLASSES': [],
 }
+
 
