@@ -8,7 +8,7 @@ const Login=()=>{
     const handleSubmit=async(e)=>{
         e.preventDefault();
         try{
-            const response = await axios.post('http://localhost:8000/api/accounts/login/',{username,password,});
+            const response = await axios.post('https://loopchat-backend.vercel.app/api/accounts/login/',{username,password,});
             localStorage.setItem('username',username)
             alert(response.data.message);
             navigate('/home');
