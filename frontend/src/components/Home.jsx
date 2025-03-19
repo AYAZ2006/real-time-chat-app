@@ -21,7 +21,7 @@ function Home() {
   useEffect(()=>{
     const fetchUsers=async()=>{
       try{
-        const response=await fetch("http://127.0.0.1:8000/api/accounts/search-users/")
+        const response=await fetch("https://loopchat-backend.vercel.app/api/accounts/search-users/")
         if (!response.ok){
           alert("Failed to fetch users")
         }
@@ -50,7 +50,7 @@ function Home() {
             alert("You must enter your username!")
             return
         }
-        const response=await fetch(`http://127.0.0.1:8000/api/accounts/send-friend-request/${receiverUsername}/`,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({sender:senderUsername})})
+        const response=await fetch(`https://loopchat-backend.vercel.app/api/accounts/send-friend-request/${receiverUsername}/`,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({sender:senderUsername})})
         if (!response.ok){
             alert("Failed to send request")
         }
@@ -69,7 +69,7 @@ const handleReq=async()=>{
       return
   }
   try{
-      const response=await fetch(`http://127.0.0.1:8000/api/accounts/received-requests/${username}/`)
+      const response=await fetch(`https://loopchat-backend.vercel.app/api/accounts/received-requests/${username}/`)
       if (!response.ok){
         alert("Failed to fetch requests");
       }
@@ -102,7 +102,7 @@ const handleRequestAction=async()=>{
       return
   }
   try{
-      const response=await fetch(`http://127.0.0.1:8000/api/accounts/friend-requests/${sender}/${action}/`,{method: "POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({receiver_username:receiver})})
+      const response=await fetch(`https://loopchat-backend.vercel.app/api/accounts/friend-requests/${sender}/${action}/`,{method: "POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({receiver_username:receiver})})
       if (!response.ok){
         alert("Failed to process request")
       }
@@ -118,7 +118,7 @@ const handleRequestAction=async()=>{
 }
 const added=async()=>{
   const username=localStorage.getItem("username")
-  const response=await fetch(`http://127.0.0.1:8000/api/accounts/accepted/${username}/`)
+  const response=await fetch(`https://loopchat-backend.vercel.app/api/accounts/accepted/${username}/`)
   const data=await response.json()
   setAcceptedFriends(data.friends || []);
 }
