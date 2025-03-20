@@ -93,3 +93,13 @@ class ListFriends(APIView):
             for fr in friends_requests
         ]
         return JsonResponse({'friends':friends_list})
+        
+class LoggedInUserView(APIView):
+    permission_classes = [IsAuthenticated]
+    def get(self, request):
+        user = request.user
+        return Response({
+            "id": user.id,
+            "username": user.username,
+            "email": user.email
+        })
