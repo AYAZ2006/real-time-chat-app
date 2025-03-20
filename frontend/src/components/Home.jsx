@@ -62,6 +62,16 @@ function Home() {
 }
 
 const username=localStorage.getItem("username")
+fetch("http://your-django-api-url/see/", {
+  method: "POST",headers: {"Content-Type": "application/json",},
+  body: JSON.stringify({ username: username }),})
+  .then((response) => response.json())
+  .then((data) => {
+    console.log("Username stored successfully:", data);
+  })
+  .catch((error) => {
+    console.error("Error storing username:", error);
+  });
 const handleReq=async()=>{
   const username=localStorage.getItem("username")
   if (!username){
