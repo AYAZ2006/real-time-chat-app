@@ -10,6 +10,7 @@ from .serializers import UserSerializer
 from rest_framework.permissions import AllowAny
 from django.shortcuts import get_object_or_404
 from django.db import models
+from rest_framework.permissions import IsAuthenticated
 @ensure_csrf_cookie
 def get_csrf_token(request):
     return JsonResponse({"message": "CSRF cookie set"})
