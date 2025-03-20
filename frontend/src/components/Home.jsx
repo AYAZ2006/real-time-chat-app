@@ -209,7 +209,7 @@ useEffect(() => {
             <Settings setIsGenOpen={setIsGenOpen} />
           </div>
         )}
-        {chatRoom && (<iframe id='webs' src="http://127.0.0.1:8000/"></iframe>)}
+        {chatRoom && (<iframe id='webs' src="https://backend-2-eq8c.onrender.com/"></iframe>)}
       </div>
     </div>
   );
