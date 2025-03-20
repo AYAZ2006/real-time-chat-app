@@ -11,6 +11,7 @@ from rest_framework.permissions import AllowAny
 from django.shortcuts import get_object_or_404
 from django.db import models
 from rest_framework.permissions import IsAuthenticated
+from django.core.cache import cache
 @ensure_csrf_cookie
 def get_csrf_token(request):
     return JsonResponse({"message": "CSRF cookie set"})
@@ -106,9 +107,12 @@ class LoggedInUserView(APIView):
         })
 class Store(APIView):
     def post(self, request, *args, **kwargs):
-        data = request.data
-        processed_data = {
-            "message": "Data received successfully",
-            "received_data": data
-        }
-        return Response(processed_data, status=status.HTTP_201_CREATED)
+        username=request.data.get('username')
+        cache.set('username',username,timeout=3600)
+        return Response({"message": "Username stored successfully"}, status=status.HTTP_201_CREATED)
+class Bring(APIView):
+    def get(self,request,*args,**kwargs):
+        username=cache.get('username')
+        if not username:
+            return Response({"error": "Username not found"}, status=status.HTTP_404_NOT_FOUND)
+        return Response({"username": username}, status=status.HTTP_200_OK)
