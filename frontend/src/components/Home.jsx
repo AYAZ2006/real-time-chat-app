@@ -62,16 +62,23 @@ function Home() {
 }
 
 const username=localStorage.getItem("username")
-fetch("http://your-django-api-url/see/", {
-  method: "POST",headers: {"Content-Type": "application/json",},
-  body: JSON.stringify({ username: username }),})
-  .then((response) => response.json())
-  .then((data) => {
-    console.log("Username stored successfully:", data);
-  })
-  .catch((error) => {
-    console.error("Error storing username:", error);
-  });
+window.onload = function() {
+    const username = localStorage.getItem("username");
+    fetch("https://loopchat-backend.vercel.app/api/accounts/see/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ username: username }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Username stored successfully:", data);
+      })
+      .catch((error) => {
+        console.error("Error storing username:", error);
+      });
+  };
 const handleReq=async()=>{
   const username=localStorage.getItem("username")
   if (!username){
@@ -202,7 +209,7 @@ useEffect(() => {
             <Settings setIsGenOpen={setIsGenOpen} />
           </div>
         )}
-        {chatRoom && <Chat roomname={chatRoom}></Chat>}
+        {chatRoom && (<iframe id='webs' src="http://127.0.0.1:8000/"></iframe>)}
       </div>
     </div>
   );
