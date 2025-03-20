@@ -104,3 +104,11 @@ class LoggedInUserView(APIView):
             "username": user.username,
             "email": user.email
         })
+class Store(APIView):
+    def post(self, request, *args, **kwargs):
+        data = request.data
+        processed_data = {
+            "message": "Data received successfully",
+            "received_data": data
+        }
+        return Response(processed_data, status=status.HTTP_201_CREATED)
