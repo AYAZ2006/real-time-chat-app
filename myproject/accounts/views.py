@@ -108,6 +108,8 @@ class LoggedInUserView(APIView):
 class Store(APIView):
     def post(self, request, *args, **kwargs):
         username=request.data.get('username')
+        if not username:
+            return Response({"error": "Username is required"}, status=status.HTTP_400_BAD_REQUEST)
         cache.set('username',username,timeout=3600)
         return Response({"message": "Username stored successfully"}, status=status.HTTP_201_CREATED)
 class Bring(APIView):
