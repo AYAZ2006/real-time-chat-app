@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import (RegisterView, LoginView,get_csrf_token,SearchUsersView,Send,View,AcceptRejectFriendRequestView,ListFriends,Store,Bring)
+from .views import (RegisterView, LoginView,get_csrf_token,SearchUsersView,Send,View,AcceptRejectFriendRequestView,ListFriends,Store,Bring,ChatMessageView)
 
 urlpatterns = [
     path('register/', RegisterView.as_view(), name='register'),
@@ -12,4 +12,5 @@ urlpatterns = [
     path('accepted/<str:username>/', ListFriends.as_view(), name="accepted-friends"),
     path('see/', Store.as_view(), name='logged-in-user'),
     path('want/',Bring.as_view(),name='logged'),
+    path('messages/',ChatMessageView.as_view(),name='messages'),
 ]
