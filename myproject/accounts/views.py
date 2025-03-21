@@ -118,16 +118,27 @@ class Bring(APIView):
         if not username:
             return Response({"error": "Username not found"}, status=status.HTTP_404_NOT_FOUND)
         return Response({"username": username}, status=status.HTTP_200_OK)
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from django.db.models import Q
+from django.shortcuts import get_object_or_404
+from .models import Message, CustomUser
+from .serializers import MessageSerializer
+
 class ChatMessageView(APIView):
     def get(self, request):
-        sender = request.GET.get('sender')
-        receiver = request.GET.get('receiver')
+        sender_username = request.GET.get('sender')
+        receiver_username = request.GET.get('receiver')
         
-        if not sender or not receiver:
+        if not sender_username or not receiver_username:
             return Response({"error": "Sender and receiver are required"}, status=status.HTTP_400_BAD_REQUEST)
         
+        sender = get_object_or_404(CustomUser, username=sender_username)
+        receiver = get_object_or_404(CustomUser, username=receiver_username)
+
         messages = Message.objects.filter(
-            (Q(sender=sender) & Q(receiver=receiver)) | (Q(sender=receiver) & Q(receiver=sender))
+            Q(sender=sender, receiver=receiver) | Q(sender=receiver, receiver=sender)
         ).order_by('timestamp')
         
         serializer = MessageSerializer(messages, many=True)
