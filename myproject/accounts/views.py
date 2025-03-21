@@ -118,3 +118,24 @@ class Bring(APIView):
         if not username:
             return Response({"error": "Username not found"}, status=status.HTTP_404_NOT_FOUND)
         return Response({"username": username}, status=status.HTTP_200_OK)
+class ChatMessageView(APIView):
+    def get(self, request):
+        sender = request.GET.get('sender')
+        receiver = request.GET.get('receiver')
+        
+        if not sender or not receiver:
+            return Response({"error": "Sender and receiver are required"}, status=status.HTTP_400_BAD_REQUEST)
+        
+        messages = Message.objects.filter(
+            (Q(sender=sender) & Q(receiver=receiver)) | (Q(sender=receiver) & Q(receiver=sender))
+        ).order_by('timestamp')
+        
+        serializer = MessageSerializer(messages, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
+    def post(self, request):
+        serializer = MessageSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
