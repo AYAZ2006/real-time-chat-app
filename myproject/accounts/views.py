@@ -1,5 +1,5 @@
 from django.contrib.auth import authenticate
-from django.contrib.auth.models import User,AnonymousUser
+from django.contrib.auth.models import User,AnonymousUser,Q
 from django.http import JsonResponse
 from django.views.decorators.csrf import ensure_csrf_cookie
 from rest_framework import generics, permissions, status
